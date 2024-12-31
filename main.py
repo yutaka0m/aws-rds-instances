@@ -16,7 +16,8 @@ def get_rds_instances(session, region):
                     'AccountId': session.client('sts').get_caller_identity()['Account'],
                     'Region': region,
                     'InstanceName': instance['DBInstanceIdentifier'],
-                    'InstanceType': instance['DBInstanceClass']
+                    'InstanceType': instance['DBInstanceClass'],
+                    'EngineType': instance['Engine'],
                 })
     return instances
 
@@ -62,7 +63,7 @@ def main():
 
     # 結果をCSVファイルに出力
     with open('rds_instances.csv', 'w', newline='') as csvfile:
-        fieldnames = ['AccountId', 'Region', 'InstanceName', 'InstanceType']
+        fieldnames = ['AccountId', 'Region', 'InstanceName', 'InstanceType', 'EngineType']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
