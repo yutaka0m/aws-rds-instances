@@ -18,6 +18,7 @@ def get_rds_instances(session, region):
                     'InstanceName': instance['DBInstanceIdentifier'],
                     'InstanceType': instance['DBInstanceClass'],
                     'EngineType': instance['Engine'],
+                    'MultiAz': instance['MultiAZ'],
                 })
     return instances
 
@@ -63,7 +64,14 @@ def main():
 
     # 結果をCSVファイルに出力
     with open('rds_instances.csv', 'w', newline='') as csvfile:
-        fieldnames = ['AccountId', 'Region', 'InstanceName', 'InstanceType', 'EngineType']
+        fieldnames = [
+            'AccountId',
+            'Region',
+            'InstanceName',
+            'InstanceType',
+            'EngineType',
+            'MultiAz',
+        ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
